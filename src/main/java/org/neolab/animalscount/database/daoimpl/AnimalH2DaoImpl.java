@@ -54,10 +54,11 @@ public class AnimalH2DaoImpl implements AnimalDao {
         }
     }
 
+
     @Override
     public int getCountByFiler(String filter) throws AppException {
         try {
-            ResultSet result = con.createStatement().executeQuery("SELECT COUNT(*) AS cnt FROM animal WHERE " + filter);
+            ResultSet result = con.createStatement().executeQuery(String.format("SELECT COUNT(*) AS cnt FROM animal WHERE %s;", filter));
             result.next();
             LOGGER.debug("Animal count = {} for filter \"{}\".", result.getInt("cnt"), filter);
             return result.getInt("cnt");

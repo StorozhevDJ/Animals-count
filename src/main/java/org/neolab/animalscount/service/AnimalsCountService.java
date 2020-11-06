@@ -20,6 +20,17 @@ public class AnimalsCountService {
         }
     }
 
+    public AnimalsCountService(AnimalDao animalDao) {
+        this.animalDao = animalDao;
+    }
+
+
+    /**
+     * Calculate animal count from animalsList file by filtersList file
+     *
+     * @param animalsList - csv file with animals properties
+     * @param filtersList - files with rules for calculate (rules write as SQL syntax after "WHERE")
+     */
     public void animalsCountTask(File animalsList, File filtersList) {
         try {
             animalDao.importFileToTable(animalsList);
@@ -29,7 +40,7 @@ public class AnimalsCountService {
                     System.out.println("Count = " + cnt);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Error: " + e.getMessage());
             }
         } catch (AppException e) {
             System.err.println("Error: " + e.getError().getMessage() + ". Additional message: " + e.getMessage());
